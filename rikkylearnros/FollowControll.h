@@ -34,6 +34,9 @@
 #include "Controller.h"
 
 #include <dynamic_reconfigure/server.h>
+
+#include "rikkylearnros/pidParamConfig.h"
+
 // #include </home/adminr/catkin_ws/src/rikkylearnros/cfg/cpp/object_follow/pidParamConfig.h>
 // #include <object_follow/controller_cmd.h>
 
@@ -78,7 +81,6 @@
 //#define C_DY2Dfx  MULTIROTOR_FRONTCAM_C_DY2Dfx
 //#define C_DP2Dfy  MULTIROTOR_FRONTCAM_C_DP2Dfy
 
-
 enum Flight_Modes{
     HOVER,
     TRACKING
@@ -113,12 +115,15 @@ TrackedRect():cv::Rect(){
         width = w;
         height = h;
 
-        set_point.x = ( (float) xc + ((float) w)/2.0 )/FRONTCAM_RESOLUTION_WIDTH;
-        set_point.y = ( (float) yc + ((float)h)/2.0 )/FRONTCAM_RESOLUTION_HEIGHT;
+        // set_point.x = ( (float) xc + ((float) w)/2.0 )/FRONTCAM_RESOLUTION_WIDTH;
+        // set_point.y = ( (float) yc + ((float)h)/2.0 )/FRONTCAM_RESOLUTION_HEIGHT;
+
+        set_point.x = ( (float) xc)/FRONTCAM_RESOLUTION_WIDTH;
+        set_point.y = ( (float) yc-((float) h/2))/FRONTCAM_RESOLUTION_HEIGHT;
 
         // [fs]size and [fD]inverse sqrt of size of object in the image
         // set_point.z = 1.0/sqrt( (((float)w)/FRONTCAM_RESOLUTION_WIDTH)*(((float)h)/FRONTCAM_RESOLUTION_HEIGHT));
-        set_point.z = (w*h); // Reference = 48*78
+        set_point.z = (w*h)/(48.0*78.0);
         set_point.yaw = (float)yaw ;
     }
 
@@ -167,8 +172,8 @@ private:
     Flight_Modes flight_mode;
     ardrone_autonomy::Navdata navdata_telemetry;
 
-    // dynamic_reconfigure::Server<object_follow::pidParamConfig> srv;
-    // dynamic_reconfigure::Server<rikkylearnros::pidParamConfig>::CallbackType f;
+    dynamic_reconfigure::Server<rikkylearnros::pidParamConfig> srv;
+    dynamic_reconfigure::Server<rikkylearnros::pidParamConfig>::CallbackType f;
 
     int controller_rate;
 
@@ -177,7 +182,7 @@ public:
 
     FollowControll();
 
-    // void dyn_recon_callback(rikkylearnros::pidParamConfig &config, uint32_t level);
+    void dyn_recon_callback(rikkylearnros::pidParamConfig &config, uint32_t level);
     void recon_callback();
 
     void follow();

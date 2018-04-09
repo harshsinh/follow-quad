@@ -133,17 +133,17 @@
           <waypoint>
             <time>0</time>
             <!--<pose>2 -2 0 0 0 0</pose>-->
-            <pose>3 0 0 0 0 -1.57</pose>
+            <pose>8 5 0 0 0 -1.57</pose>
           </waypoint>
           <waypoint>
             <time>20</time>
             <!--<pose>9 -2 0 0 0 -1.57</pose>-->
-            <pose>3 -10 0 0 0 -1.57</pose>
+            <pose>8 -5 0 0 0 -1.57</pose>
           </waypoint>
           <waypoint>
             <time>40</time>
-            <!--<pose>9 -9 0 0 0 -1.57</pose>-->
-            <pose>3 0 0 0 0 -1.57</pose>
+            <pose>8 5 0 0 0 -1.57</pose>
+            <!--<pose>0 0 0 0 0 -1.57</pose>-->
           </waypoint>
           <!--<waypoint>
             <time>12</time>

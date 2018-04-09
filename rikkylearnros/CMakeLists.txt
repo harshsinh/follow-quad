@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(rikkylearnros)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -81,7 +81,7 @@ generate_messages(
 )
 
 #dynamic reconfigure
- generate_dynamic_reconfigure_options( cfg/pidParam.cfg)
+ generate_dynamic_reconfigure_options(cfg/pidParam.cfg)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -132,6 +132,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
   # ${OpenCV_INCLUDE_DIRS}
   # ${PCL_INCLUDE_DIRS}
 )
@@ -217,10 +218,11 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-include_directories(
- ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
-  ${catkin_INCLUDE_DIRS}
-)
+# include_directories(
+#  ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
+#   ${catkin_INCLUDE_DIRS}
+#   cfg/cpp/object_follow/
+# )
 
 # need to add opencv dependencies dumbass
 
@@ -252,26 +254,12 @@ target_link_libraries(libController
    ${OpenCV_LIBS}
    ${catkin_LIBRARIES}
 )
-## Declare a cpp executable
-add_executable(main_object_follow_node 
-  main_object_follow_node.cpp
-)
-add_dependencies(main_object_follow_node libFollowControll libController ${PROJECT_NAME}_gencfg)
-
-## Specify libraries to link a library or executable target against
- target_link_libraries(main_object_follow_node
-   ${OpenCV_LIBS}
-   libFollowControll
-   libController
-   ${catkin_LIBRARIES}
-
- )
 
  ## Declare a cpp executable
 add_executable(thesisDone 
   thesisDone.cpp
 )
-add_dependencies(thesisDone libFollowControll libController ${PROJECT_NAME}_gencfg)
+add_dependencies(thesisDone libFollowControll libController ${PROJECT_NAME}_gencfg ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(thesisDone
