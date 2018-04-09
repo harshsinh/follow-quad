@@ -78,6 +78,7 @@ find_package(OpenCV REQUIRED)
 generate_messages(
   DEPENDENCIES
   std_msgs
+  tld_msgs
 )
 
 #dynamic reconfigure
@@ -121,7 +122,7 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES object_follow
   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
-#  DEPENDS system_lib
+ DEPENDS system_lib tld_msgs
 )
 
 ###########
@@ -239,6 +240,9 @@ add_library(libFollowControll
  FollowControll.cpp
  FollowControll.h
 )
+
+add_dependencies(libFollowControll ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
 set_target_properties(libFollowControll PROPERTIES COMPILE_FLAGS "-std=c++0x")
 target_link_libraries(libFollowControll
    ${OpenCV_LIBS}
