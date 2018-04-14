@@ -26,7 +26,7 @@ int main(int argc, char **argv)
  FollowControll::FollowControll(): set_reference_target_width_height(false), flight_mode(TRACKING), controller_rate(100)
 {
     
-    _sub_tracked_object = _n.subscribe("/boundingbox", 1000, &FollowControll::tracked_object_cb, this);
+    _sub_tracked_object = _n.subscribe("/bbox", 1000, &FollowControll::tracked_object_cb, this);
     _model_subscriber = _n.subscribe("/gazebo/model_states", 10, &FollowControll::ModelStatecallback, this);
 
     _pub_cmd_vel = _n.advertise<geometry_msgs::Twist>("cmd_vel",1);
@@ -54,10 +54,11 @@ void FollowControll::tracked_object_cb(const tld_msgs::BoundingBox &msg)
 
       _tracked_rect.set(msg.x,msg.y,msg.width,msg.height,0);
       _tracked_rect.apply_pitch_degrees(navdata_telemetry.rotY,fovy);
+      _tracked_rect.set_point.z = msg.z;
 
       // _tracker_rect_reference.set(FRONTCAM_RESOLUTION_WIDTH/2-msg.width/2,FRONTCAM_RESOLUTION_HEIGHT/2-msg.height/2,msg.width,msg.height,1/2.0);
       _tracker_rect_reference.set(FRONTCAM_RESOLUTION_WIDTH/2,FRONTCAM_RESOLUTION_HEIGHT/2,48,78,1/2.0);
-      // _tracker_rect_reference.set_point.z = (48*78);
+      _tracker_rect_reference.set_point.z = (5.0);
         
 
       float max_x_error = 2.0/fovx;
