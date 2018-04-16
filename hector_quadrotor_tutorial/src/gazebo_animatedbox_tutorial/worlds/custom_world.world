@@ -132,27 +132,36 @@
         <trajectory id="0" type="walking">
           <waypoint>
             <time>0</time>
-            <!--<pose>2 -2 0 0 0 0</pose>-->
             <pose>8 5 0 0 0 -1.57</pose>
           </waypoint>
           <waypoint>
             <time>20</time>
-            <!--<pose>9 -2 0 0 0 -1.57</pose>-->
             <pose>8 -5 0 0 0 -1.57</pose>
           </waypoint>
           <waypoint>
-            <time>40</time>
-            <pose>8 5 0 0 0 -1.57</pose>
-            <!--<pose>0 0 0 0 0 -1.57</pose>-->
-          </waypoint>
-          <!--<waypoint>
-            <time>12</time>
-            <pose>2 -9 0 0 0 1.57</pose>
+            <time>21</time>
+            <pose>8 -5 0 0 0 -3.14</pose>
           </waypoint>
           <waypoint>
-            <time>16</time>
-            <pose>2 -2 0 0 0 1.57</pose>
-          </waypoint>-->
+            <time>40</time>
+            <pose>-8 -5 0 0 0 -3.14</pose>
+          </waypoint>
+          <waypoint>
+            <time>41</time>
+            <pose>-8 -5 0 0 0 -4.71</pose>
+          </waypoint>
+          <waypoint>
+            <time>60</time>
+            <pose>-8 5 0 0 0 -4.71</pose>
+          </waypoint>
+          <waypoint>
+            <time>61</time>
+            <pose>-8 5 0 0 0 0</pose>
+          </waypoint>
+          <waypoint>
+            <time>80</time>
+            <pose>8 5 0 0 0 0</pose>
+          </waypoint>
         </trajectory>
       </script>
     </actor>

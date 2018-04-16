@@ -28,22 +28,24 @@ def boundingbox_cb(data):
     time = data.header.stamp
 
     submatrix = image[data.y-data.height/2:data.y+data.height/2, data.x-data.width/2:data.x+data.width/2]
-    distance = np.mean(submatrix[submatrix!=0])
-    num_nzeros = np.count_nonzero(submatrix)/float(image.shape[0]*image.shape[1])
+    # print (np.count_nonzero(submatrix>0), float(submatrix.shape[0]*submatrix.shape[1]))
+    num_nzeros = np.count_nonzero(submatrix>0)/float(submatrix.shape[0]*submatrix.shape[1])
 
-    print ("num of nz : " + str(num_nzeros))
+    if(num_nzeros < 0.6):
+        return
 
-    cv2.imshow("submat", submatrix)
-
-    print (data.x, data.y, data.width, data.height);
-
-    rectim = cv2.rectangle(image, (data.x - data.width/2, data.y - data.height/2), (data.x + data.width/2, data.y + data.height/2), 255)
-    cv2.imshow("bb overlay", rectim)
-    cv2.waitKey(1)
+    distance = np.mean(submatrix[submatrix>0])
     distance = f*T/(distance + 0.001)
+
+    print (distance, num_nzeros)
 
     if(distance < 0):
         return
+
+    cv2.imshow("submat", submatrix)
+    rectim = cv2.rectangle(image, (data.x - data.width/2, data.y - data.height/2), (data.x + data.width/2, data.y + data.height/2), 255)
+    cv2.imshow("bb overlay", rectim)
+    cv2.waitKey(1)
 
     # print ("distance, max(image), max(submat), mean(submat), sigma(submat)")
     # print(distance, np.max(image), np.max(submatrix), np.mean(submatrix), np.std(submatrix))
@@ -58,7 +60,7 @@ def boundingbox_cb(data):
 def republisher():
     rospy.init_node('republisher_node')
     rospy.Subscriber("/boundingbox", BoundingBox, boundingbox_cb)
-    rospy.Subscriber("/front_cam/disparity", DisparityImage, disparity_cb)
+    rospy.Subscriber("/stereo/disparity", DisparityImage, disparity_cb)
 
     rate = rospy.Rate(30)
 

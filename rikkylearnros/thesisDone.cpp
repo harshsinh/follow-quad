@@ -26,7 +26,7 @@ int main(int argc, char **argv)
  FollowControll::FollowControll(): set_reference_target_width_height(false), flight_mode(TRACKING), controller_rate(100)
 {
     
-    _sub_tracked_object = _n.subscribe("/bbox", 1000, &FollowControll::tracked_object_cb, this);
+    _sub_tracked_object = _n.subscribe("/bbox_final", 1000, &FollowControll::tracked_object_cb, this);
     _model_subscriber = _n.subscribe("/gazebo/model_states", 10, &FollowControll::ModelStatecallback, this);
 
     _pub_cmd_vel = _n.advertise<geometry_msgs::Twist>("cmd_vel",1);
@@ -58,7 +58,9 @@ void FollowControll::tracked_object_cb(const tld_msgs::BoundingBox &msg)
 
       // _tracker_rect_reference.set(FRONTCAM_RESOLUTION_WIDTH/2-msg.width/2,FRONTCAM_RESOLUTION_HEIGHT/2-msg.height/2,msg.width,msg.height,1/2.0);
       _tracker_rect_reference.set(FRONTCAM_RESOLUTION_WIDTH/2,FRONTCAM_RESOLUTION_HEIGHT/2,48,78,1/2.0);
-      _tracker_rect_reference.set_point.z = (5.0);
+      auto setp = 5.0;
+      auto temp = _n.getParam("dis_setp", setp);
+      _tracker_rect_reference.set_point.z = (setp);
         
 
       float max_x_error = 2.0/fovx;
@@ -171,10 +173,22 @@ void FollowControll::publish_command()
 void FollowControll::recon_callback()
 {
   float kpz=2.0,kpx=2.0,kpy=2.0,kpyaw=0.0;
+  float kdz=0.0,kdx=0.0,kdy=0.0,kdyaw=0.0;
+  float kiz=0.0,kix=0.0,kiy=0.0,kiyaw=0.0;
+
   bool temp = _n.getParam("kpz", kpz);
   temp = _n.getParam("kpx", kpx);
   temp = _n.getParam("kpy", kpy);
   temp = _n.getParam("kpyaw", kpyaw);
+  temp = _n.getParam("kdz", kdz);
+  temp = _n.getParam("kdx", kdx);
+  temp = _n.getParam("kdy", kdy);
+  temp = _n.getParam("kdyaw", kdyaw);
+  temp = _n.getParam("kiz", kiz);
+  temp = _n.getParam("kix", kix);
+  temp = _n.getParam("kiy", kiy);
+  temp = _n.getParam("kiyaw", kiyaw);
+
   // double kp=1, ki=1, kd=1, pLim =1, iLim =1, lpf=1; //for all x,y,range,yaw
   Const_PID x{kpx,0,0.0,50,0};
   Const_PID y{kpy,0,0.0,50,0};
