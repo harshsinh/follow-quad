@@ -11,4 +11,4 @@ Execute the following (prefereably in this order)
 * `roslaunch hector_quadrotor_demo custom_flight.launch`
 * `rosservice call /enable_motors "enable: true"`
 * `cd follow_quad/follow_quad/` --> `python bb_repub.py`
-* `rosrun follow_quad thesisDone`
+* `rosrun follow_quad follow_q`
