@@ -160,7 +160,7 @@
 //   // double x = (msg->pose[1].position.x);
 // }
 
-// void FollowControll::dyn_recon_callback(rikkylearnros::pidParamConfig &config, uint32_t level)
+// void FollowControll::dyn_recon_callback(follow_quad::pidParamConfig &config, uint32_t level)
 // {
 //   ROS_INFO("Reconfigure request XY: %f, %f, %f",
 //            config.groups.pid_x.kPx,config.groups.pid_x.kDx,config.groups.pid_x.pMaxX);
@@ -376,7 +376,7 @@ void FollowControll::publish_command()
   _pub_cmd_vel.publish(cmd);
 }
 
-void FollowControll::dyn_recon_callback(rikkylearnros::pidParamConfig &config, uint32_t level)
+void FollowControll::dyn_recon_callback(follow_quad::pidParamConfig &config, uint32_t level)
 {
   ROS_INFO("Reconfigure request XY: %f, %f, %f",
            config.groups.pid_x.kPx,config.groups.pid_x.kDx,config.groups.pid_x.pMaxX);

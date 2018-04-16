@@ -35,10 +35,7 @@
 
 #include <dynamic_reconfigure/server.h>
 
-#include "rikkylearnros/pidParamConfig.h"
-
-// #include </home/adminr/catkin_ws/src/rikkylearnros/cfg/cpp/object_follow/pidParamConfig.h>
-// #include <object_follow/controller_cmd.h>
+#include "follow_quad/pidParamConfig.h"
 
 #include <camera_info_manager/camera_info_manager.h>
 #include "gazebo_msgs/ModelStates.h"
@@ -172,8 +169,8 @@ private:
     Flight_Modes flight_mode;
     ardrone_autonomy::Navdata navdata_telemetry;
 
-    dynamic_reconfigure::Server<rikkylearnros::pidParamConfig> srv;
-    dynamic_reconfigure::Server<rikkylearnros::pidParamConfig>::CallbackType f;
+    dynamic_reconfigure::Server<follow_quad::pidParamConfig> srv;
+    dynamic_reconfigure::Server<follow_quad::pidParamConfig>::CallbackType f;
 
     int controller_rate;
 
@@ -182,7 +179,7 @@ public:
 
     FollowControll();
 
-    void dyn_recon_callback(rikkylearnros::pidParamConfig &config, uint32_t level);
+    void dyn_recon_callback(follow_quad::pidParamConfig &config, uint32_t level);
     void recon_callback();
 
     void follow();
