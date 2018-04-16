@@ -260,13 +260,13 @@ target_link_libraries(libController
 )
 
  ## Declare a cpp executable
-add_executable(thesisDone 
-  thesisDone.cpp
+add_executable(follow_q
+  main.cpp
 )
-add_dependencies(thesisDone libFollowControll libController ${PROJECT_NAME}_gencfg ${${PROJECT_NAME}_EXPORTED_TARGETS})
+add_dependencies(follow_q libFollowControll libController ${PROJECT_NAME}_gencfg ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
- target_link_libraries(thesisDone
+ target_link_libraries(follow_q
    ${OpenCV_LIBS}
    libFollowControll
    libController
