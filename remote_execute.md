@@ -1,14 +1,14 @@
-## Instructions for setting up the remote, for running the code.
+## Instructions to set up the remote server for running the code.
 
 * Exporting environment variables on the **remote** machine:  
     * Check machine-ip using `ifconfig`
     * `export ROS_MASTER_URI=http://<romote-machine-ip>:11311`
     * `export ROS_IP=<remote-machine-ip>`
 
-* Exporting environment variables on the **local** machine:  
-    * Check machine-ip using `ifconfig`
-    * `export ROS_MASTER_URI=http://<romote-machine-ip>:11311`
-    * `export ROS_IP=<local-machine-ip>`
+**Note**: You need to export Environment Variable on **all terminals the involved**.
 
-* Run the `roscore` on **remote-machine**.
-* Run `roslaunch hector_quadrotor_demo custom_flight.launch` on the **local-machine**.
+Execute the following (prefereably in this order)
+* `roscore`  
+* Activate your tensorflow environment (if any).
+* `roslaunch tf2bb server_code.launch`
+* `ROS_NAMESPACE=stereo rosrun stereo_image_proc stereo_image_proc`

@@ -1,0 +1,10 @@
+<launch>
+	<node name="republishl" type="republish" pkg="image_transport" output="screen" args="compressed in:=/imgl raw out:=stereo/left/image_raw" />
+	<node name="republishr" type="republish" pkg="image_transport" output="screen" args="compressed in:=/imgr raw out:=stereo/right/image_raw" />
+	<include file="$(find tensorflow_object_detector)/launch/object_detect.launch" />
+	<node name="stetodet" type="relay" pkg="topic_tools" args="stereo/left/image_raw /image" />
+	<node name="caminl" type="relay" pkg="topic_tools" args="/front_cam/left/camera_info stereo/left/camera_info" />
+	<node name="caminr" type="relay" pkg="topic_tools" args="/front_cam/right/camera_info stereo/right/camera_info" />
+        <node name="tf2bb" pkg="tf2bb" type="tf2bb.py" output="screen" />
+       <!-- <node name="bb_repub" pkg="tf2bb" type="bb_repub.py" output="screen" /> -->
+</launch>
