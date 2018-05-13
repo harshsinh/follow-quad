@@ -12,3 +12,4 @@ Execute the following (prefereably in this order)
 * Activate your tensorflow environment (if any).
 * `roslaunch tf2bb server_code.launch`
 * `ROS_NAMESPACE=stereo rosrun stereo_image_proc stereo_image_proc`
+* `rosrun tf2bb kf_bb.py`
