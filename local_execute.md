@@ -9,6 +9,8 @@
 
 Execute the following (prefereably in this order)
 * `roslaunch hector_quadrotor_demo custom_flight.launch`
+* `rosrun image_transport republish raw in:=/front_cam/left/image compreseed out:=/imgl`
+* `rosrun image_transport republish raw in:=/front_cam/right/image compreseed out:=/imgr`
 * `rosservice call /enable_motors "enable: true"`
 * `cd follow_quad/follow_quad/` --> `python bb_repub.py`
 * `rosrun follow_quad follow_q`
